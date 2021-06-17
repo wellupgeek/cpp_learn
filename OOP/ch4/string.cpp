@@ -22,12 +22,11 @@ string::~string() {
 }
 
 string& string::operator=(const string &rhs) {
-    char* temp = new char[strlen(rhs.data) + 1];
-    strcpy(temp, rhs.data);
-    delete []data;
-    data = new char[strlen(temp) + 1];
-    strcpy(data, temp);
-    delete []temp;
+    if (this != &rhs){
+        delete []data;
+        data = new char[strlen(rhs.data) + 1];
+        strcpy(data, rhs.data);
+    }
     return *this;
 }
 
@@ -39,6 +38,7 @@ int main()
 {
     const char* str = "hello world";
     string a(str);
+    a.print();
     a = a;
     a.print();
 }
