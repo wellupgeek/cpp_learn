@@ -14,7 +14,7 @@ struct Entry{
 };
 
 union value{
-    Node* p;
+    int* p;
     int i;
 };
 
