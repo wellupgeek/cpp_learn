@@ -9,11 +9,24 @@ public:
     ~Shoes(){}
 };
 
+class Clothes{
+public:
+    virtual void show() = 0;
+    ~Clothes(){};
+};
+
 // 具体鞋子类, 分为耐克、阿迪达斯、李宁
 class NikeShoes : public Shoes {
 public:
     void show() {
-        std::cout << "Nike, Just do it" << '\n';
+        std::cout << "Nike shoe, Just do it" << '\n';
+    }
+};
+
+class NikeClother : public Clothes {
+public:
+    void show() {
+        std::cout << "Nike clothes, impossible style" << '\n';
     }
 };
 
@@ -61,32 +74,54 @@ enum SHOES_TYPE
 //     }
 // };
 
-// 工厂模式
-class ShoesFactory {
+// // 工厂模式
+// class ShoesFactory {
+// public:
+//     virtual Shoes* CreateShoes() = 0;
+//     ~ShoesFactory(){};
+// };
+
+// class NikeProducer : public ShoesFactory {
+// public: 
+//     Shoes* CreateShoes() {
+//         return new NikeShoes();
+//     }
+// };
+
+// class AdidasProducer : public ShoesFactory {
+// public:
+//     Shoes* CreateShoes() {
+//         return new AdidasShoes();
+//     }
+// };
+
+// class LiNingProducer : public ShoesFactory {
+// public:
+//     Shoes* CreateShoes() {
+//         return new LiNingShoes();
+//     }
+// };
+
+// 抽象工厂模式
+class Factory
+{
 public:
     virtual Shoes* CreateShoes() = 0;
-    ~ShoesFactory(){};
+    virtual Clothes* CreateClothes() = 0;
+    ~Factory();
 };
 
-class NikeProducer : public ShoesFactory {
-public: 
+class NikeProducer : public Factory
+{
+public:
     Shoes* CreateShoes() {
         return new NikeShoes();
     }
-};
 
-class AdidasProducer : public ShoesFactory {
-public:
-    Shoes* CreateShoes() {
-        return new AdidasShoes();
+    Clothes* CreateClothes() {
+        return new NikeClother();
     }
-};
-
-class LiNingProducer : public ShoesFactory {
-public:
-    Shoes* CreateShoes() {
-        return new LiNingShoes();
-    }
+    ~NikeProducer();
 };
 
 // int main()
@@ -123,16 +158,28 @@ public:
 //     return 0;
 // }
 
+// int main()
+// {
+//     // Nike 流水线
+//     ShoesFactory *pnikeProducer = new NikeProducer();
+//     // 生产线产出球鞋
+//     Shoes *pnikeShoes = pnikeProducer->CreateShoes();
+//     // show()
+//     pnikeShoes->show();
+//     // 释放资源
+//     delete pnikeShoes;
+//     delete pnikeProducer;
+
+// }
+
 int main()
 {
-    // Nike 流水线
-    ShoesFactory *pnikeProducer = new NikeProducer();
-    // 生产线产出球鞋
-    Shoes *pnikeShoes = pnikeProducer->CreateShoes();
-    // show()
+    Factory *pnikeFactory = new NikeProducer();
+    Clothes *pnikeClothes = pnikeFactory->CreateClothes();
+    Shoes *pnikeShoes = pnikeFactory->CreateShoes();
+    pnikeClothes->show();
     pnikeShoes->show();
-    // 释放资源
     delete pnikeShoes;
-    delete pnikeProducer;
-
+    delete pnikeClothes;
+    return 0;
 }
