@@ -65,7 +65,7 @@ enum SHOES_TYPE
 class ShoesFactory {
 public:
     virtual Shoes* CreateShoes() = 0;
-    ~ShoesFactory();
+    ~ShoesFactory(){};
 };
 
 class NikeProducer : public ShoesFactory {
