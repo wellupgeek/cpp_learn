@@ -1,7 +1,7 @@
-#include "complex.h"
+#include "complex.cpp"
 
 int main()
 {
-    const complex t(2, 1);
-    t.real();
+    complex<int> t(2, 1);
+    std::cout << t;
 }
