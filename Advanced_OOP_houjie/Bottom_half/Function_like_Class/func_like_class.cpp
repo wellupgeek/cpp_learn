@@ -8,6 +8,8 @@ struct pair{
     T2 second;
     pair() : first{T1()}, second{T2()} {}
     pair(const T1& a, const T2& b) : first(a), second(b) {}
+    template <typename U1, typename U2>
+    pair(const pair<U1, U2>& p) : first(p.first), second(p.second) {}
 };
 
 template <typename T>
@@ -34,4 +36,6 @@ int main()
 
     std::cout << SelectFirst<pair<int, double>>()(a) << std::endl;
     std::cout << SelectSecond<pair<int, double>>()(a) << std::endl; 
+
+    // pair<Base1, Base2> p(pair<Derived1, Derived2>());
 }
